@@ -1,0 +1,22 @@
+{
+  "name": "file-filter",
+  "version": "1.0.0",
+  "description": "file filter",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ThyMajesty/file-filter.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ThyMajesty/file-filter/issues"
+  },
+  "homepage": "https://github.com/ThyMajesty/file-filter#readme",
+  "dependencies": {
+    "mkdirp": "^0.5.1"
+  }
+}
