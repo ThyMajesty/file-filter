@@ -1,6 +1,17 @@
 const FileFilter = require('./file-filter');
 
-let fileFilter = new FileFilter('./test-data', ['jpg', 'png']);
+const filter = [
+	'jpg', 
+	'jpeg',
+	'png', 
+	'bmp', 
+	'webm', 
+	'mp4', 
+	'gif', 
+	];
+const folder = 'D:\\test-data';
+
+let fileFilter = new FileFilter(folder, filter);
 
 let res = fileFilter.sortFilesByFilters();
 //console.log(res);
