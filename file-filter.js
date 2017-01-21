@@ -4,7 +4,7 @@ const path = require('path'),
 
 class FileFilter {
 
-    constructor(folder = '.', filters = ['.']) {
+    constructor(folder = '.', filters = []) {
         this.folder = folder;
         this.filters = filters;
 
@@ -39,8 +39,37 @@ class FileFilter {
         return results;
     }
 
+    findFilesByAutoFilters(folder) {
+        let results = [],
+            files = fs.readdirSync(folder || this.folder);
+        for (let i = 0; i < files.length; i++) {
+            let filename = path.join(folder || this.folder, files[i]);
+            let stat = fs.lstatSync(filename);
+            if (stat.isDirectory()) {
+                results = results.concat(this.findFilesByAutoFilters(filename)); //recurse
+            } else {
+                let ext = path.extname(files[i]).replace('.', '');
+                if (this.filters.indexOf(ext) === -1) {
+                    this.filters.push(ext);
+                }
+                this.filters.forEach((filter) => {
+                    if (filename.indexOf(filter) >= 0) {
+                        console.log(`-- found: "${filename}" by filter: ${filter}`);
+                        results.push({
+                            filter: filter,
+                            path: filename,
+                            filename: files[i],
+                        });
+                    }
+                })
+
+            }
+        }
+        return results;
+    }
+
     sortFilesByFilters() {
-        let filtered = this.findFilesByFilters(this.folder);
+        let filtered = this.findFilesByAutoFilters(this.folder);
         filtered.forEach((file) => {
             mkdirp(path.join(this.folder, file.filter), (err) => {
                 if (err) {
